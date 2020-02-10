@@ -22,7 +22,7 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
                       info_map: {'name' => 'userId', 'groups' => 'roles'},
                       setup: lambda { |env|
                         opts = env['omniauth.strategy'].options
-                        opts[:secret] = GlobalSetting.jwt_secret
+                        opts[:secret] = public_key
                         opts[:auth_url] = GlobalSetting.jwt_auth_url
                         opts[:algorithm] = GlobalSetting.jwt_algorithm
                       }
