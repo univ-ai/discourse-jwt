@@ -4,7 +4,7 @@
 # version: 0.1
 # author: Robin Ward
 
-gem "discourse-omniauth-jwt", "0.0.3", require: false
+gem "discourse-omniauth-jwt", "0.0.2", require: false
 
 require 'omniauth/jwt'
 
