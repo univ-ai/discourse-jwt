@@ -4,7 +4,7 @@
 # version: 0.1
 # author: Robin Ward
 
-gem "discourse-omniauth-jwt", "0.0.2", require: false
+gem "discourse-omniauth-jwt", "0.0.3", require: false
 
 require 'omniauth/jwt'
 
@@ -16,12 +16,14 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
   def register_middleware(omniauth)
     omniauth.provider :jwt,
                       name: 'jwt',
-                      uid_claim: 'id',
-                      required_claims: ['id', 'email', 'name'],
+                      uid_claim: 'userId',
+                      required_claims: ['userId', 'roles'],
+                      :info_map: {'name' => 'userId', 'groups' => 'roles'},
                       setup: lambda { |env|
                         opts = env['omniauth.strategy'].options
                         opts[:secret] = SiteSetting.jwt_secret
                         opts[:auth_url] = SiteSetting.jwt_auth_url
+                        opts[:algorithm] = SiteSetting.jwt_algorithm
                       }
   end
 
