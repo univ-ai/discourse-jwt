@@ -4,7 +4,7 @@
 # version: 0.1
 # author: Robin Ward
 
-gem "discourse-omniauth-jwt", "0.0.2", require: false
+gem "discourse-omniauth-jwt", "0.0.3", require: false
 
 require 'omniauth/jwt'
 
@@ -14,6 +14,7 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
   end
 
   def register_middleware(omniauth)
+    public_key = OpenSSL::PKey::RSA.new("-----BEGIN RSA PRIVATE KEY-----\n#{GlobalSetting.jwt_secret}\n-----END RSA PRIVATE KEY-----")
     omniauth.provider :jwt,
                       name: 'jwt',
                       uid_claim: 'userId',
@@ -21,9 +22,9 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
                       info_map: {'name' => 'userId', 'groups' => 'roles'},
                       setup: lambda { |env|
                         opts = env['omniauth.strategy'].options
-                        opts[:secret] = SiteSetting.jwt_secret
-                        opts[:auth_url] = SiteSetting.jwt_auth_url
-                        opts[:algorithm] = SiteSetting.jwt_algorithm
+                        opts[:secret] = GlobalSetting.jwt_secret
+                        opts[:auth_url] = GlobalSetting.jwt_auth_url
+                        opts[:algorithm] = GlobalSetting.jwt_algorithm
                       }
   end
 
