@@ -18,7 +18,7 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
                       name: 'jwt',
                       uid_claim: 'userId',
                       required_claims: ['userId', 'roles'],
-                      :info_map: {'name' => 'userId', 'groups' => 'roles'},
+                      info_map: {'name' => 'userId', 'groups' => 'roles'},
                       setup: lambda { |env|
                         opts = env['omniauth.strategy'].options
                         opts[:secret] = SiteSetting.jwt_secret
