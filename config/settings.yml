@@ -1,5 +1,13 @@
 plugins:
-  jwt_enabled: false
-  jwt_secret: ""
-  jwt_auth_url: ""
-  jwt_algorithm: "RS256"
+  jwt_enabled:
+    default: false
+    client: true
+  jwt_secret:
+    default: ""
+    client: true
+  jwt_auth_url:
+    default: ""
+    client: true
+  jwt_algorithm:
+   default: "RS256"
+   client: true
