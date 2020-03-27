@@ -19,8 +19,8 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
     omniauth.provider :jwt,
                       name: 'jwt',
                       uid_claim: 'userId',
-                      required_claims: ['userId'],
-                      info_map: {'name' => 'userId'},
+                      required_claims: ['userId', 'email'],
+                      info_map: {'name' => 'name', 'username' => 'username'},
                       setup: lambda { |env|
                         opts = env['omniauth.strategy'].options
                         opts[:secret] = public_key
