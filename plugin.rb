@@ -15,9 +15,6 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
 
   def register_middleware(omniauth)
     public_key_string = "-----BEGIN RSA PRIVATE KEY-----\n#{GlobalSetting.jwt_secret}\n-----END RSA PRIVATE KEY-----"
-    puts public_key_string
-    public_key_string.gsub!(/\s/,'\n')
-    puts public_key_string
     public_key = OpenSSL::PKey::RSA.new(public_key_string)
     omniauth.provider :jwt,
                       name: 'jwt',
