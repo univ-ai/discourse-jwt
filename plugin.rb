@@ -18,12 +18,12 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
     public_key = OpenSSL::PKey::RSA.new(public_key_string)
     omniauth.provider :jwt,
                       name: 'jwt',
-                      uid_claim: 'userId',
-                      required_claims: ['userId', 'email'],
-                      info_map: {'name' => 'name', 'username' => 'username'},
                       setup: lambda { |env|
                         opts = env['omniauth.strategy'].options
+                        opts[:uid_claim] = 'userId'
+                        opts[:required_claims] = ['email', 'userId', 'username']
                         opts[:secret] = public_key
+                        opts[:info_map] = {'email' => 'email', 'name' => 'username'}
                         opts[:auth_url] = GlobalSetting.jwt_auth_url
                         opts[:algorithm] = GlobalSetting.jwt_algorithm
                       }
