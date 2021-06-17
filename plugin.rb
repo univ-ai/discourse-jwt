@@ -20,10 +20,11 @@ class JWTAuthenticator < Auth::ManagedAuthenticator
                       name: 'jwt',
                       setup: lambda { |env|
                         opts = env['omniauth.strategy'].options
+                        opts[:algorithm] = 'RS256'
                         opts[:uid_claim] = 'userId'
                         opts[:required_claims] = ['email', 'userId', 'username']
                         opts[:secret] = public_key
-                        opts[:info_map] = {'email' => 'email', 'name' => 'username'}
+                        opts[:info_map] = {'email' => 'email', 'username' => 'username', 'name' => 'name'}
                         opts[:auth_url] = GlobalSetting.jwt_auth_url
                         opts[:algorithm] = GlobalSetting.jwt_algorithm
                       }
