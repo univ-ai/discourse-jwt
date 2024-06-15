@@ -4,7 +4,7 @@
 # version: 0.1
 # author: Robin Ward
 
-gem "a-discourse-omniauth-jwt", "0.0.4",git: "https://github.com/univ-ai/a-discourse-omniauth-jwt", require: false
+gem "a-discourse-omniauth-jwt", "0.0.4",source: "https://github.com/univ-ai/a-discourse-omniauth-jwt", branch:"main", require: false
 require 'omniauth/jwt'
 
 class JWTAuthenticator < Auth::ManagedAuthenticator
